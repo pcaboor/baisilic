@@ -2,11 +2,14 @@
 
 import { useUser } from '@clerk/nextjs'
 import React from 'react'
+import useProject from '~/hooks/use-project'
 
 const DashBoard = () => {
-    const { user } = useUser()
+    const { project } = useProject()
     return (
-        <div></div>
+        <div>
+            <h1>{project?.name}</h1>
+        </div>
     )
 }
 export default DashBoard
