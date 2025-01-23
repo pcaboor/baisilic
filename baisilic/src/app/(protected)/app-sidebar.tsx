@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "~/components/ui/sidebar"
 import useProject from "~/hooks/use-project"
 import { cn } from "~/lib/utils"
+import { PiLegoFill } from "react-icons/pi";
 
 const items = [
     {
@@ -42,9 +43,10 @@ export function AppSidebar() {
             <SidebarHeader>
                 <div className="flex gap-2 items-center p-1">
                     {/* TODOO Logo */}
-                    <Pyramid />
+
+                    <PiLegoFill size={40} />
                     {open && (
-                        <h1 className="text-2xl font-serif text-primary/80">
+                        <h1 className="text-2xl font-bold text-primary/80">
                             Baisilic
                         </h1>
                     )}

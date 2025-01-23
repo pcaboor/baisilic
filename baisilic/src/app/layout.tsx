@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
+
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "sonner";
 
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
-        <body>
+        <body className="font-sans">
           <TRPCReactProvider>{children}</TRPCReactProvider>
           <Toaster richColors />
         </body>
