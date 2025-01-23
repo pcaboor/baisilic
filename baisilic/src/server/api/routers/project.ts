@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { pollCommits } from "~/lib/github";
+import { broadcastProgress, completeProjectPolling } from "~/lib/sse-handler";
 
 export const projectRouter = createTRPCRouter({
     createProject: protectedProcedure.input(
@@ -21,7 +23,24 @@ export const projectRouter = createTRPCRouter({
                 }
             }
         })
-        return project
+        // Start commit polling in background
+        // void (async () => {
+        //     try {
+        //         await pollCommits(project.id, (progress) => {
+        //             // Broadcast progress via SSE
+        //             broadcastProgress(project.id, progress);
+        //         });
+
+        //         // Mark polling as complete
+        //         completeProjectPolling(project.id);
+        //     } catch (error) {
+        //         console.error('Commit polling failed:', error);
+        //         // Optionally broadcast error
+        //         broadcastProgress(project.id, -1);
+        //     }
+        // })();
+        await pollCommits(project.id)
+        return project;
     }),
     getProjects: protectedProcedure.query(async ({ ctx }) => {
         return await ctx.db.project.findMany({
@@ -32,6 +51,15 @@ export const projectRouter = createTRPCRouter({
                     }
                 },
                 deletedAt: null
+            }
+        })
+    }),
+    getCommits: protectedProcedure.input(z.object({
+        projectId: z.string()
+    })).query(async ({ ctx, input }) => {
+        return await ctx.db.commit.findMany({
+            where: {
+                projectId: input.projectId
             }
         })
     })
