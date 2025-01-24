@@ -4,7 +4,7 @@ import React from 'react'
 import { Tabs, TabsContent } from '~/components/ui/tabs';
 import { cn } from '~/lib/utils';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { lucario } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type Props = {
     filesReferences: { fileName: string; sourceCode: string; summary: string }[]
@@ -31,7 +31,7 @@ const CodeReference = ({ filesReferences }: Props) => {
                 </div>
                 {filesReferences.map(file => (
                     <TabsContent key={file.fileName} value={file.fileName} className='max-h-[40vh] overflow-scroll max-w-7xl'>
-                        <SyntaxHighlighter language='typescript' style={lucario}>
+                        <SyntaxHighlighter language='typescript' style={vscDarkPlus} showLineNumbers >
                             {file.sourceCode}
                         </SyntaxHighlighter>
                     </TabsContent>

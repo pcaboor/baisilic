@@ -1,3 +1,9 @@
+// import { HuggingFaceTransformersEmbeddings } from '@langchain/community/embeddings/huggingface_transformers';
+
+import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/hf_transformers";
+import { NomicEmbeddings } from "@langchain/nomic";
+
+// import { GoogleGenerativeAI } from "@google/generative-ai"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { RateLimiter } from 'limiter';
 import { Document } from "@langchain/core/documents"
@@ -5,21 +11,28 @@ import { Document } from "@langchain/core/documents"
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 const model = genAI.getGenerativeModel({
     model: 'gemini-1.5-flash'
+
 })
+
+// const embModel = new HuggingFaceTransformersEmbeddings({
+//     model: "Xenova/all-MiniLM-L6-v2",
+// });
+const nomicEmbeddings = new NomicEmbeddings();
 
 // Create a rate limiter to allow 1 request per 1 seconds
 const limiter = new RateLimiter({
     tokensPerInterval: 1,
-    interval: 1000,
+    interval: 5000,
 });
 
-export const aiSummariseCommit = async (diff: string, progressCallback?: (progress: number) => void) => {
+export const aiSummariseCommit = async (diff: string) => {
 
     await limiter.removeTokens(1);
-
+    // retryWithBackoff(() =>
     try {
-        const response = await model.generateContent([
-            `
+        const response = await
+            model.generateContent([
+                `
                 You are an expert programmer, and you trying to summarize a git diff.
                 Reminders about the git diff format:
                 - Each commit is a new line starting with "+" or "-"
@@ -52,16 +65,13 @@ export const aiSummariseCommit = async (diff: string, progressCallback?: (progre
                 Do not include parts of the example in your summary.
                 It is given only as an example of appropriate comments.
                 `,
-            `Please summarise the following diff file: \n\n${diff}`,
-        ]);
-
-        // Optional progress tracking
-        if (progressCallback) {
-            progressCallback(1);
-        }
+                `Please summarise the following diff file: \n\n${diff}`,
+            ]);
 
         return response.response.text();
     } catch (error) {
+        console.error('TROP DE REQUEST');
+
         console.error('Gemini API Error:', error);
         throw error;
     }
@@ -69,28 +79,75 @@ export const aiSummariseCommit = async (diff: string, progressCallback?: (progre
 
 
 export async function summariseCode(doc: Document) {
-    console.log("getting summary for", doc.metadata.source);
-    const code = doc.pageContent.slice(0, 10000);
-    const response = await model.generateContent([
-        `You are an intelligent senior software engineer who specialises in onboarding junior software engineers on to projects`,
-        `You are onboarding a junior software engineer and explaining to them ther purpose to the ${doc.metadata.source} file`,
-        `Here is the code:
-    ---
-    ${code} 
-    ---
-        Give a summary no more than 100 words of the code above`,
-    ]);
+    await limiter.removeTokens(1);
+    try {
+        console.log("getting summary for", doc.metadata.source);
+        const code = doc.pageContent.slice(0, 10000);
+        const response = await model.generateContent([
+            `You are an intelligent senior software engineer who specialises in onboarding junior software engineers on to projects`,
+            `You are onboarding a junior software engineer and explaining to them ther purpose to the ${doc.metadata.source} file`,
+            `Here is the code:
+        ---
+        ${code} 
+        ---
+            Give a summary no more than 100 words of the code above`,
+        ]);
 
-    return response.response.text();
+        return response.response.text();
+    } catch (error) {
+        console.error("Error while summarising code:", error);
+        throw new Error("Failed to summarise the code.");
+    }
 }
 
 export async function generateEmbedding(summary: string) {
-    const model = genAI.getGenerativeModel({
-        model: 'text-embedding-004'
-    })
-    const result = await model.embedContent(summary)
-    const embedding = result.embedding
-    return embedding.values;
+    try {
+        // Vérification du format de l'input
+
+
+        // Utiliser l'instance d'OllamaEmbeddings pour générer un embedding
+        const result = await nomicEmbeddings.embedQuery(summary);
+        console.log("Génération de l'embedding pour : ", summary);
+
+        if (result) {
+            return result;
+        } else {
+            throw new Error("Aucun embedding trouvé dans la réponse");
+        }
+    } catch (error) {
+        console.error("Erreur dans generateEmbedding:", error);
+        throw new Error("Échec de la génération de l'embedding");
+    }
 }
 
+// export async function generateEmbedding(summary: string) {
+//     const model = genAI.getGenerativeModel({
+//         model: 'text-embedding-004'
+//     })
+//     const result = await model.embedContent(summary)
+//     const embedding = result.embedding
+//     return embedding.values;
+// }
 
+// const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// async function retryWithBackoff<T>(
+//     fn: () => Promise<T>,
+//     retries: number = 3,
+//     delayMs: number = 1000
+// ): Promise<T> {
+//     for (let attempt = 0; attempt < retries; attempt++) {
+//         try {
+//             return await fn();
+//         } catch (error: any) {
+//             if (error.response?.status === 429 && attempt < retries - 1) {
+//                 console.warn(`Rate limit hit. Retrying in ${delayMs}ms...`);
+//                 await delay(delayMs);
+//                 delayMs *= 2; // Backoff exponentiel
+//             } else {
+//                 throw error;
+//             }
+//         }
+//     }
+//     throw new Error("Max retries exceeded");
+// }

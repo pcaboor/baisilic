@@ -43,7 +43,6 @@ const AskQuestionCard = () => {
     }
 
     return (
-
         <>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className='sm:max-w-[80vw]'>
@@ -68,7 +67,7 @@ const AskQuestionCard = () => {
 
             <Card className='relative col-span-3'>
                 <CardHeader>
-                    <CardTitle>Ask a Question</CardTitle>
+                    <CardTitle>Poser une question sur le projet à Baisilic</CardTitle>
                 </CardHeader>
                 <div className='px-10 my-5'>
                     <MDEditor.Markdown
@@ -89,8 +88,10 @@ const AskQuestionCard = () => {
                         <Button type='submit' disabled={isLoading}>
                             Ask to Baisilic
                         </Button>
-                    </form>
 
+                    </form>
+                    <div className='h-4'></div>
+                    <div className='text-xs text-gray-500'> L'ia peut commettre des erreurs, veillez à verifier les fichiers si vous avez des doutes</div>
                 </CardContent>
             </Card>
 

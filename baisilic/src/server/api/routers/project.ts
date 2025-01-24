@@ -39,7 +39,7 @@ export const projectRouter = createTRPCRouter({
         //         broadcastProgress(project.id, -1);
         //     }
         // })();
-        //   await indexGithubRepo(project.id, input.githubUrl, input.githubToken)
+        await indexGithubRepo(project.id, input.githubUrl, input.githubToken)
         await pollCommits(project.id)
         return project;
     }),

@@ -2,9 +2,12 @@ import { Octokit } from 'octokit';
 import { db } from '~/server/db';
 import axios from 'axios'
 import { aiSummariseCommit } from './gemini';
+import { octokit } from './github-loader';
+import { RateLimiter } from 'limiter';
 
-export const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
+const limiter = new RateLimiter({
+    tokensPerInterval: 1,
+    interval: 1000,
 });
 
 type Response = {
@@ -25,7 +28,9 @@ export const getCommitHashes = async (githubUrl: string): Promise<Response[]> =>
 
     const { data } = await octokit.rest.repos.listCommits({
         owner,
-        repo
+        repo,
+        per_page: 10,
+        page: 1,
     })
     const sortedCommits = data.sort((a: any, b: any) => new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime()) as any[]
 
@@ -49,9 +54,18 @@ export const pollCommits = async (projectId: string) => {
     const unprocessedCommits = await filterUnprocessedCommits(projectId, commitHashes);
     console.log('Unprocessed commits:', unprocessedCommits.length);
 
-    const summaryResponses = await Promise.allSettled(unprocessedCommits.map(commit => {
-        return summariseCommit(githubUrl, commit.commitHash)
-    }))
+    const summaryResponses = await Promise.allSettled(
+        unprocessedCommits.map(async (commit) => {
+            try {
+                // Attendez un jeton avant d'exécuter la requête
+                await limiter.removeTokens(1);
+                return await summariseCommit(githubUrl, commit.commitHash);
+            } catch (error) {
+                console.error(`Rate limiting error: ${error}`);
+                return ""; // En cas d'erreur de limitation, renvoyer une chaîne vide
+            }
+        })
+    );
     const summaries = summaryResponses.map((response) => {
         if (response.status === 'fulfilled') {
             return response.value as string;
@@ -117,10 +131,9 @@ async function fetchProjectGithubUrl(projectId: string) {
 
 async function filterUnprocessedCommits(projectId: string, commitHashes: Response[]) {
     const processedCommits = await db.commit.findMany({
-        where: {
-            projectId
-        },
-    })
+        where: { projectId },
+        select: { commitHash: true },
+    });
     const unprocessedCommits = commitHashes.filter(commit => !processedCommits.some((processedCommit) => processedCommit.commitHash === commit.commitHash))
     return unprocessedCommits
 }

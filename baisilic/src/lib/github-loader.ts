@@ -2,17 +2,30 @@ import { db } from './../server/db';
 import { GithubRepoLoader } from "@langchain/community/document_loaders/web/github"
 import { Document } from "@langchain/core/documents"
 import { generateEmbedding, summariseCode } from "./gemini"
+import { Octokit } from 'octokit';
+
+
+export const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN,
+    // auth: process.env.GITHUB_TOKEN,
+
+});
+
+(async () => {
+    const { data } = await octokit.rest.rateLimit.get();
+    console.log('Limite =>', data);
+})();
+
 
 
 export const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
 
     const cleanUrl = githubUrl.replace(/\.git$/, '');
 
-
     try {
         const loader = new GithubRepoLoader(cleanUrl, {
             accessToken: githubToken || '',
-            branch: 'main',
+            branch: 'master', // master
             ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb'],
             recursive: true,
             unknown: 'warn',
