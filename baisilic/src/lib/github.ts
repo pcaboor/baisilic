@@ -14,7 +14,6 @@ type Response = {
     commitAuthorAvatar: string
     commitDate: string
 }
-
 export const getCommitHashes = async (githubUrl: string): Promise<Response[]> => {
 
     const cleanUrl = githubUrl.replace('.git', '');
@@ -94,7 +93,6 @@ async function summariseCommit(githubUrl: string, commitHash: string) {
         repo,
         ref: commitHash,
     });
-
     // Extract patch/diff information from the files
     const diffContent = data.files?.map(file =>
         `diff --git a/${file.filename} b/${file.filename}\n${file.patch || ''}`
@@ -104,6 +102,7 @@ async function summariseCommit(githubUrl: string, commitHash: string) {
 }
 
 async function fetchProjectGithubUrl(projectId: string) {
+
     const project = await db.project.findUnique({
         where: { id: projectId },
         select: {
