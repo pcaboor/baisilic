@@ -25,7 +25,7 @@ export const loadGithubRepo = async (githubUrl: string, githubToken?: string) =>
     try {
         const loader = new GithubRepoLoader(cleanUrl, {
             accessToken: githubToken || '',
-            branch: 'master', // master
+            branch: 'main', // master
             ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb'],
             recursive: true,
             unknown: 'warn',

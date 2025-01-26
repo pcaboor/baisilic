@@ -49,8 +49,8 @@ const CommitLog = () => {
                                     {commit.summary}
                                 </pre>
                                 <div className='flex items-center gap-x-2 mt-2'>
-                                    <Sparkles size={18} className='text-purple-600' />
-                                    <span className='text-purple-600 text-sm'>
+                                    <Sparkles size={18} className='text-emerald-800' />
+                                    <span className='text-emerald-800 text-sm font-medium'>
                                         Generate by Baisilic AI
                                     </span>
                                 </div>

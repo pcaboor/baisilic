@@ -5,6 +5,11 @@ import { aiSummariseCommit } from './gemini';
 import { octokit } from './github-loader';
 import { RateLimiter } from 'limiter';
 
+// TODOO : 
+
+// Permettre au user de choisir quel type de fichier a fetch et traiter par l'ia
+// Gagner du temps et des perfs et limiter les request api gemini et GitHub
+
 const limiter = new RateLimiter({
     tokensPerInterval: 1,
     interval: 1000,

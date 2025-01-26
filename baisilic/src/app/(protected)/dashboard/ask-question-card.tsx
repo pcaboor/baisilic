@@ -85,7 +85,7 @@ const AskQuestionCard = () => {
                         <Textarea placeholder='Quel fichier dois-je modifier pour edit la home page ?' value={question} onChange={e => setQuestion(e.target.value)} />
                         <div className='h-4'>
                         </div>
-                        <Button type='submit' disabled={isLoading}>
+                        <Button className="bg-emerald-900" type='submit' disabled={isLoading}>
                             Ask to Baisilic
                         </Button>
 

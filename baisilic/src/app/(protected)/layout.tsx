@@ -2,6 +2,7 @@ import { UserButton } from '@clerk/nextjs'
 import React from 'react'
 import { SidebarProvider } from '~/components/ui/sidebar'
 import { AppSidebar } from './app-sidebar'
+import Banner from '~/components/ui/banner'
 
 type Props = {
     children: React.ReactNode
@@ -17,6 +18,7 @@ const SidebarLayout = ({ children }: Props) => {
                     </div>
                     <UserButton />
                 </div>
+                <Banner />
                 <div className='h-4'>
                 </div>
                 <div className='border-sidebar-border bg-sidebar border shadow rounded-md overflow-y-scroll h-[calc(100vh-6rem)] p-4'>

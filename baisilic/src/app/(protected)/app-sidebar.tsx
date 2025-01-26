@@ -1,20 +1,24 @@
 'use client'
 
-import { Bot, CreditCard, LayoutDashboard, Plus, Presentation, Pyramid } from "lucide-react"
+import { Book, Bot, CreditCard, Plus, Presentation, SquareDashedMousePointer } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "~/components/ui/button"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "~/components/ui/sidebar"
 import useProject from "~/hooks/use-project"
 import { cn } from "~/lib/utils"
-import { PiLegoFill } from "react-icons/pi";
-import { FaBrain, FaFolder, FaFolderOpen } from "react-icons/fa";
+import { FaFolder, FaFolderOpen } from "react-icons/fa";
 
 const items = [
     {
         title: "Playground",
         url: '/dashboard',
-        icon: FaBrain
+        icon: SquareDashedMousePointer
+    },
+    {
+        title: "Learn",
+        url: '/learn',
+        icon: Book
     },
     {
         title: "Q&A",
@@ -44,11 +48,12 @@ export function AppSidebar() {
             <SidebarHeader>
                 <div className="flex gap-2 items-center p-1">
                     {/* TODOO Logo */}
+                    <img src="toucaml.png" className="h-10" />
 
-                    <PiLegoFill size={40} />
+                    {/* <PiLegoFill size={40} /> */}
                     {open && (
-                        <h1 className="text-2xl font-bold text-primary/80">
-                            Baisilic
+                        <h1 className="text-xl text-emerald-900 font-medium">
+                            ToucaML
                         </h1>
                     )}
                 </div>
@@ -65,11 +70,10 @@ export function AppSidebar() {
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
                                             <Link href={item.url} className={cn({
-                                                '!bg-purple-100 !text-black font-medium': pathname === item.url
-                                            }, 'list-none')} >
+                                                '!bg-gray-200 !text-black font-medium': pathname === item.url
+                                            }, 'list-none [&>svg]:size-5')} >
                                                 <item.icon />
-
-                                                <span className="text-base font-medium">{item.title}</span>
+                                                <span className="text-sm font-medium">{item.title}</span>
                                             </Link>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
