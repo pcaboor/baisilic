@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PreviewGradient } from '~/components/ui/bento-landing-page'
+import Banner from '~/components/ui/banner'
+import { DisplayCard } from '~/components/ui/landing-page/cards'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -18,6 +20,7 @@ export default function Home() {
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
+        <Banner />
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
@@ -94,6 +97,7 @@ export default function Home() {
             </div>
           </DialogPanel>
         </Dialog>
+
       </header>
 
       <div className="relative isolate px-6 ">
@@ -111,7 +115,7 @@ export default function Home() {
         </div>
         <div className="mx-auto max-w-2xl py-32 lg:py-48">
 
-          <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+          {/* <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               Announcing our next round of funding.{' '}
               <a href="#" className="font-semibold text-emerald-900">
@@ -119,7 +123,7 @@ export default function Home() {
                 Read more <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
-          </div>
+          </div> */}
           <div className="flex justify-center items-center">
             <img src="toucaml.png" className="h-32" />
           </div>
@@ -131,6 +135,7 @@ export default function Home() {
               Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
               fugiat veniam occaecat.
             </p>
+
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#"
@@ -141,7 +146,9 @@ export default function Home() {
               <a href="#" className="text-sm/6 font-semibold text-gray-900">
                 Learn more <span aria-hidden="true">→</span>
               </a>
+
             </div>
+            <DisplayCard />
           </div>
         </div>
         <div

@@ -60,7 +60,7 @@ export function AppSidebar() {
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>
+                    <SidebarGroupLabel className="my">
                         Application
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
@@ -89,7 +89,7 @@ export function AppSidebar() {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {projects?.map(project => {
-                                const isSelected = project.id === projectId;
+                                // const isSelected = project.id === projectId;
                                 return (
                                     <SidebarMenuItem key={project.name}>
                                         <SidebarMenuButton asChild>
@@ -100,17 +100,13 @@ export function AppSidebar() {
 
                                                 <div className={cn(
                                                     'rounded-sm border size-6 flex items-center justify-center text-sm bg-white text-primary', {
-                                                    'bg-primary text-white': project.id === projectId
+                                                    'bg-emerald-900 text-white': project.id === projectId
                                                 }
                                                 )}>
                                                     {project.name[0]}
                                                 </div>
 
-                                                {isSelected ? (
-                                                    <FaFolderOpen color="blue" />
-                                                ) : (
-                                                    <FaFolder color="blue" />
-                                                )}
+
                                                 <span className="text-base">{project.name}</span>
                                             </div>
                                         </SidebarMenuButton>
@@ -121,7 +117,7 @@ export function AppSidebar() {
                             {open && (
                                 <SidebarMenuItem>
                                     <Link href={'/create'}>
-                                        <Button className="w-fit">
+                                        <Button className="w-fit bg-emerald-900">
                                             <Plus />
                                             Create Project
                                         </Button>
