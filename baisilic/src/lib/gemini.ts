@@ -81,7 +81,7 @@ export const aiSummariseCommit = async (diff: string) => {
 export async function summariseCode(doc: Document) {
     await limiter.removeTokens(1);
     try {
-        console.log("getting summary for", doc.metadata.source);
+        console.log('%cAnalyse de fichier', 'color: blue; font-weight: bold;', doc.metadata.source);
         const code = doc.pageContent.slice(0, 10000);
         const response = await model.generateContent([
             `You are an intelligent senior software engineer who specialises in onboarding junior software engineers on to projects`,

@@ -82,7 +82,8 @@ export const aiSummariseCommit = async (diff: string, progressCallback?: (progre
 
 
 export async function summariseCode(doc: Document) {
-    console.log("getting summary for", doc.metadata.source);
+    console.log('%cAnalyse de fichier', 'color: blue; font-weight: bold;', doc.metadata.source);
+
     const code = doc.pageContent.slice(0, 10000);
 
     console.log("== Code DONE ! ==", code)

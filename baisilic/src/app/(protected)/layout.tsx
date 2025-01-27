@@ -18,7 +18,8 @@ const SidebarLayout = ({ children }: Props) => {
                     </div>
                     <UserButton />
                 </div>
-                <Banner />
+                <Banner title={"ToucaML est en accès anticipé"} description={"des bugs peuvent apparaitres"} buttonText={"Suggérer des améliorations"} buttonLink={""} alignment="center" />
+
                 <div className='h-4'>
                 </div>
                 <div className='border-sidebar-border bg-sidebar border shadow rounded-md overflow-y-scroll h-[calc(100vh-6rem)] p-4'>

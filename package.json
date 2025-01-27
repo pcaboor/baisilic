@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@octokit/graphql": "^8.1.2",
+    "js-base64": "^3.7.7"
+  }
+}

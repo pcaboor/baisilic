@@ -16,6 +16,8 @@ export const octokit = new Octokit({
     console.log('Limite =>', data);
 })();
 
+const { data } = await octokit.rest.users.getAuthenticated();
+console.log('Utilisateur authentifié:', data.login);
 
 
 export const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
@@ -24,12 +26,13 @@ export const loadGithubRepo = async (githubUrl: string, githubToken?: string) =>
 
     try {
         const loader = new GithubRepoLoader(cleanUrl, {
-            accessToken: githubToken || '',
+            accessToken: process.env.GITHUB_TOKEN,
+            // accessToken: githubToken || '',
             branch: 'main', // master
-            ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb'],
+            ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'node_modules', 'databases', 'database'],
             recursive: true,
             unknown: 'warn',
-            maxConcurrency: 5,
+            maxConcurrency: 2,
         });
 
         const docs = await loader.load();

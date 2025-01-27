@@ -1,6 +1,6 @@
 'use client'
 
-import { Book, Bot, CreditCard, Plus, Presentation, SquareDashedMousePointer } from "lucide-react"
+import { Book, Bot, CreditCard, Home, Plus, Presentation, SquareDashedMousePointer } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "~/components/ui/button"
@@ -9,6 +9,14 @@ import useProject from "~/hooks/use-project"
 import { cn } from "~/lib/utils"
 import { FaFolder, FaFolderOpen } from "react-icons/fa";
 
+
+const home = [
+    {
+        title: "Accueil",
+        url: '/welcome',
+        icon: Home
+    },
+]
 const items = [
     {
         title: "Playground",
@@ -59,6 +67,29 @@ export function AppSidebar() {
                 </div>
             </SidebarHeader>
             <SidebarContent>
+                <SidebarGroup>
+                    {/* <SidebarGroupLabel className="my">
+                        Application
+                    </SidebarGroupLabel> */}
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {home.map(home => {
+                                return (
+                                    <SidebarMenuItem key={home.title}>
+                                        <SidebarMenuButton asChild>
+                                            <Link href={home.url} className={cn({
+                                                '!bg-gray-200 !text-black font-medium': pathname === home.url
+                                            }, 'list-none [&>svg]:size-5')} >
+                                                <home.icon />
+                                                <span className="text-sm font-medium">{home.title}</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                )
+                            })}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupLabel className="my">
                         Application

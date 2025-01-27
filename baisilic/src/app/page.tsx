@@ -6,6 +6,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { PreviewGradient } from '~/components/ui/bento-landing-page'
 import Banner from '~/components/ui/banner'
 import { DisplayCard } from '~/components/ui/landing-page/cards'
+import { SignIn, UserButton } from '@clerk/nextjs'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -46,9 +47,11 @@ export default function Home() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {/* <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+  <SignIn />
+  <UserButton />
+</div> */}
+            Log in
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -138,7 +141,7 @@ export default function Home() {
 
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#"
+                href="/dashboard"
                 className="rounded-md bg-emerald-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
