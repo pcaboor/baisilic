@@ -11,6 +11,54 @@ export const octokit = new Octokit({
 
 });
 
+const getFileCount = async (path: string, octokit: Octokit, githubOwner: string, githubRepo: string, acc: number = 0) => {
+    const { data } = await octokit.rest.repos.getContent({
+        owner: githubOwner,
+        repo: githubRepo,
+        path,
+    });
+
+    if (!Array.isArray(data) && data.type === "file") {
+        return acc + 1;
+    }
+    if (Array.isArray(data)) {
+        let fileCount = 0
+        const directories: string[] = []
+
+        for (const item of data) {
+            if (item.type === "dir") {
+                directories.push(item.path);
+            } else {
+                fileCount++
+            }
+        }
+        if (directories.length > 0) {
+            const directoryCounts = await Promise.all(
+                directories.map(dirPath =>
+                    getFileCount(dirPath, octokit, githubOwner, githubRepo, 0))
+            )
+            fileCount += directoryCounts.reduce((acc, count) => acc + count, 0)
+        }
+        return acc + fileCount
+    }
+
+    return acc
+}
+
+export const checkCredits = async (githubUrl: string, githubToken?: string) => {
+
+    const cleanUrl = githubUrl.replace(/\.git$/, '');
+    const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN, });
+
+    const githubOwner = cleanUrl.split('/')[3]
+    const githubRepo = cleanUrl.split('/')[4]
+    if (!githubOwner || !githubRepo) {
+        return 0
+    }
+    const fileCount = await getFileCount('', octokit, githubOwner, githubRepo, 0)
+    return fileCount
+}
+
 (async () => {
     const { data } = await octokit.rest.rateLimit.get();
     console.log('Limite =>', data);

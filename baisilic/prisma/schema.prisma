@@ -23,8 +23,10 @@ model User {
 
     emailAdress String @unique
 
-    credits        Int             @default(150)
-    userToProjects UserToProject[]
+    credits            Int                 @default(150)
+    userToProjects     UserToProject[]
+    questionsAsked     Question[]
+    stripeTransactions StripeTransaction[]
 }
 
 model Project {
@@ -39,6 +41,7 @@ model Project {
     userToProjects      UserToProject[]
     commits             Commit[]
     SourceCodeEmbedding SourceCodeEmbedding[]
+    saveQuestions       Question[]
 }
 
 model UserToProject {
@@ -71,6 +74,17 @@ model Commit {
     summary            String
 }
 
+model StripeTransaction {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    credits Int
+}
+
 model SourceCodeEmbedding {
     id               String                      @id @default(cuid())
     summaryEmbedding Unsupported("vector(768)")?
@@ -79,4 +93,20 @@ model SourceCodeEmbedding {
     summary          String
     projectId        String
     project          Project                     @relation(fields: [projectId], references: [id])
+}
+
+model Question {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    question String
+    answer   String
+
+    fileReference Json?
+
+    projectId String
+    project   Project @relation(fields: [projectId], references: [id])
+    userId    String
+    user      User    @relation(fields: [userId], references: [id])
 }

@@ -7,6 +7,7 @@ import { PreviewGradient } from '~/components/ui/bento-landing-page'
 import Banner from '~/components/ui/banner'
 import { DisplayCard } from '~/components/ui/landing-page/cards'
 import { SignIn, UserButton } from '@clerk/nextjs'
+import { Gooey } from '~/components/ui/landing-page/hero'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -21,7 +22,6 @@ export default function Home() {
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
-        <Banner />
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
@@ -151,9 +151,9 @@ export default function Home() {
               </a>
 
             </div>
-            <DisplayCard />
           </div>
         </div>
+        <Gooey />
         <div
           aria-hidden="true"
           className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"

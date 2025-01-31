@@ -7,6 +7,9 @@ import useProject from '~/hooks/use-project'
 import CommitLog from './commit-log'
 import AskQuestionCard from './ask-question-card'
 import { Button } from '~/components/ui/button'
+import ArchiveButton from './archive-button'
+import InviteButton from './invite-button'
+import TeamMembers from './team-members'
 
 const DashBoard = () => {
     const { project } = useProject()
@@ -37,15 +40,18 @@ const DashBoard = () => {
 
                         {/* Placeholder for additional components */}
                         <div className="flex items-center gap-4">
-                            <span>Team</span>
+                            <TeamMembers />
+                            <InviteButton />
+                            <ArchiveButton />
                         </div>
                     </div>
 
                     {/* Ask Question Section */}
                     <div className="mt-4">
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-                            <AskQuestionCard />
+
                         </div>
+                        <AskQuestionCard />
                     </div>
 
                     {/* Commit Log Section */}
