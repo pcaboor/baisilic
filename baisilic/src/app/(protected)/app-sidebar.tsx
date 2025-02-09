@@ -1,28 +1,29 @@
 'use client'
 
-import { Book, Clock, Cloud, CreditCard, Github, Home, Keyboard, LifeBuoy, LogOut, Mail, MessageSquare, Plus, PlusCircle, Settings, SquareDashedMousePointer, User, UserPlus, Users } from "lucide-react"
+import { Book, CircleHelp, CircleUserRound, Clock, Cloud, CreditCard, GitGraph, Github, GithubIcon, Home, House, Keyboard, LifeBuoy, LogOut, Mail, MessageCircle, MessageSquare, Plus, PlusCircle, Settings, Settings2, Sparkles, SquareDashedMousePointer, Trash2, UserPlus, Users } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "~/components/ui/button"
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "~/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "~/components/ui/sidebar"
 import useProject from "~/hooks/use-project"
 import { cn } from "~/lib/utils"
-import { useUser } from "@clerk/nextjs"
 import useUserDb from "~/hooks/use-user"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
-import { Avatar, AvatarImage } from "~/components/ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
 
 const home = [
-    { title: "Touca de", url: '/welcome', icon: Home },
+    { title: "Touca de", url: '/welcome', icon: CircleUserRound },
 ]
 
 const items = [
-    { title: "Playground", url: '/dashboard', icon: SquareDashedMousePointer },
-    { title: "Documentation", url: '/learn', icon: Book },
-    { title: "Historique", url: '/qa', icon: Clock },
+    { title: "Accueil", url: '/welcome', icon: House },
     { title: "Billing", url: '/billing', icon: CreditCard }
 ]
+
+const footer = [
+    { title: "Inviter des collaborateurs", url: '/welcome', icon: UserPlus },
+]
+
+
 
 export function AppSidebar() {
     const pathname = usePathname()
@@ -30,11 +31,21 @@ export function AppSidebar() {
     const { projects, projectId, setProjectId } = useProject()
     const { user } = useUserDb();
 
+    const projectTools = [
+        { title: "IA de ToucaML", url: `/dashboard`, icon: Sparkles },
+        { title: "Tous les commits", url: `/commits`, icon: GitGraph },
+        { title: "Conversations", url: '/qa', icon: MessageCircle },
+        { title: "Aide", url: '/learn', icon: CircleHelp },
+        { title: "Corbeille", url: '/trash', icon: Trash2 },
+        { title: "Paramètres", url: '/settings', icon: Settings2 }
+    ]
+
+
     return (
         <TooltipProvider>
-            <Sidebar collapsible="icon" variant="floating">
-                <SidebarHeader />
-                <SidebarContent>
+            <Sidebar collapsible="icon" variant="floating" className="p-0 shadow-none rounded-none ">
+                <SidebarHeader className="bg-muted" />
+                <SidebarContent className="shadow-none bg-muted">
                     <SidebarGroup>
                         <SidebarGroupContent>
                             <SidebarMenu>
@@ -45,10 +56,10 @@ export function AppSidebar() {
                                                 <SidebarMenuButton className="w-full">
                                                     <div className={cn(
                                                         { '!bg-gray-red !text-black font-medium': pathname === home.url },
-                                                        'list-none [&>svg]:size-5 flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer'
+                                                        'list-none [&>svg]:size-5 flex items-center gap-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer'
                                                     )}>
-                                                        <home.icon className="text-neutral-400" />
-                                                        <span className="text-base font-medium text-neutral-600">
+                                                        <home.icon className="text-neutral-500" />
+                                                        <span className="text-base font-medium text-neutral-500">
                                                             {home.title} {user?.firstName}
                                                         </span>
                                                     </div>
@@ -59,15 +70,16 @@ export function AppSidebar() {
                                             <DropdownMenuContent className="ml-5 w-72 text-2xl">
                                                 {projects?.map(project => (
                                                     <div
+                                                        key={project.id}
                                                         onClick={() => setProjectId(project.id)}
-                                                        className="flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer"
+                                                        className="flex items-center gap-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer"
                                                     >
                                                         <DropdownMenuItem>
                                                             <div className={cn(
                                                                 'rounded-sm size-6 flex items-center justify-center text-sm bg-white text-primary transition-all duration-200 ease-in-out',
                                                                 {
                                                                     'bg-neutral-400 text-neutral-100': project.id === projectId,
-                                                                    'hover:bg-neutral-300 hover:text-neutral-800': project.id !== projectId
+
                                                                 }
                                                             )}>
                                                                 {project.name[0]}
@@ -168,11 +180,11 @@ export function AppSidebar() {
                                             <TooltipTrigger asChild>
                                                 <SidebarMenuButton asChild>
                                                     <Link href={item.url} className={cn(
-                                                        { '!bg-neutral-100 !text-black font-medium': pathname === item.url },
-                                                        'list-none [&>svg]:size-5 flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200'
+                                                        { '!bg-neutral-200 !text-black font-medium': pathname === item.url },
+                                                        'list-none [&>svg]:size-5 flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-300'
                                                     )}>
-                                                        <item.icon className="text-neutral-400" />
-                                                        <span className="text-base font-medium text-neutral-600">{item.title}</span>
+                                                        <item.icon className="text-neutral-500" />
+                                                        <span className="text-base font-medium text-neutral-500">{item.title}</span>
                                                     </Link>
                                                 </SidebarMenuButton>
                                             </TooltipTrigger>
@@ -186,10 +198,38 @@ export function AppSidebar() {
 
                     <SidebarGroup>
                         <SidebarGroupLabel className="text-sm font-semibold text-neutral-400 justify-between flex">
-                            Projets
+                            Gestion de projet
+                        </SidebarGroupLabel>
+
+                        <SidebarGroupContent>
+                            <SidebarMenu>
+                                {projectTools.map(item => (
+                                    <SidebarMenuItem key={item.title}>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <SidebarMenuButton asChild>
+                                                    <Link href={item.url} className={cn(
+                                                        { '!bg-neutral-200 !text-black font-medium': pathname === item.url },
+                                                        'list-none [&>svg]:size-5 flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-300'
+                                                    )}>
+                                                        <item.icon className="text-neutral-500" />
+                                                        <span className="text-base font-medium text-neutral-500">{item.title}</span>
+                                                    </Link>
+                                                </SidebarMenuButton>
+                                            </TooltipTrigger>
+                                            {/* <TooltipContent>{item.title}</TooltipContent> */}
+                                        </Tooltip>
+                                    </SidebarMenuItem>
+                                ))}
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                    <SidebarGroup>
+                        <SidebarGroupLabel className="text-sm font-semibold text-neutral-400 justify-between flex">
+                            Créer un projet
                             <Tooltip delayDuration={100}>
                                 <TooltipTrigger asChild>
-                                    <Link href={'/create'}>
+                                    <Link href={'/onboarding'}>
                                         <Plus
                                             size={17}
                                             className="rounded transition-all duration-200 ease-in-out hover:bg-neutral-100 hover:scale-110"
@@ -199,56 +239,32 @@ export function AppSidebar() {
                                 <TooltipContent>Créer un projet</TooltipContent>
                             </Tooltip>
                         </SidebarGroupLabel>
-
-                        {/* <SidebarGroupContent>
-                            <SidebarMenu>
-                                {projects?.map(project => (
-                                    <SidebarMenuItem key={project.name}>
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <SidebarMenuButton asChild>
-                                                    <div
-                                                        onClick={() => setProjectId(project.id)}
-                                                        className="flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer"
-                                                    >
-                                                        <div className={cn(
-                                                            'rounded-sm size-6 flex items-center justify-center text-sm bg-white text-primary transition-all duration-200 ease-in-out',
-                                                            {
-                                                                'bg-neutral-400 text-neutral-100': project.id === projectId,
-                                                                'hover:bg-neutral-300 hover:text-neutral-800': project.id !== projectId
-                                                            }
-                                                        )}>
-                                                            {project.name[0]}
-                                                        </div>
-                                                        <span className="text-base font-medium text-neutral-600 transition-all duration-200 ease-in-out hover:text-neutral-800">
-                                                            {project.name}
-                                                        </span>
-                                                    </div>
-                                                </SidebarMenuButton>
-                                            </TooltipTrigger>
-                                            <TooltipContent>{project.name}</TooltipContent> 
-                                        </Tooltip>
-                                    </SidebarMenuItem>
-                                ))}
-                                {open && (
-                                    <SidebarMenuItem>
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <Link href={'/create'}>
-                                                    <Button className="w-fit bg-emerald-900 flex items-center gap-2">
-                                                        <Plus />
-                                                        Create Project
-                                                    </Button>
-                                                </Link>
-                                            </TooltipTrigger>
-                                            <TooltipContent>Créer un projet</TooltipContent>
-                                        </Tooltip>
-                                    </SidebarMenuItem>
-                                )}
-                            </SidebarMenu>
-                        </SidebarGroupContent> */}
                     </SidebarGroup>
                 </SidebarContent>
+                <SidebarFooter className="bg-muted mb-4">
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {footer.map(item => (
+                                <SidebarMenuItem key={item.title}>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <SidebarMenuButton asChild>
+                                                <Link href={item.url} className={cn(
+                                                    { '!bg-neutral-200 !text-black font-medium': pathname === item.url },
+                                                    'list-none [&>svg]:size-5 flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-300'
+                                                )}>
+                                                    <item.icon className="text-neutral-500" />
+                                                    <span className="text-base font-medium text-neutral-500">{item.title}</span>
+                                                </Link>
+                                            </SidebarMenuButton>
+                                        </TooltipTrigger>
+                                        {/* <TooltipContent>{item.title}</TooltipContent> */}
+                                    </Tooltip>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarFooter>
             </Sidebar>
         </TooltipProvider >
     )

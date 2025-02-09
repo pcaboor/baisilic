@@ -1,13 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { PreviewGradient } from '~/components/ui/bento-landing-page'
-import Banner from '~/components/ui/banner'
-import { DisplayCard } from '~/components/ui/landing-page/cards'
-import { SignIn, UserButton } from '@clerk/nextjs'
-import { Gooey } from '~/components/ui/landing-page/hero'
 import useProject from '~/hooks/use-project'
 import { useRouter } from 'next/navigation'
 
@@ -20,16 +14,16 @@ const navigation = [
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false)
   const { project } = useProject()
   const router = useRouter()
 
   const handleGetStarted = () => {
-    if (project?.id) {
-      router.push(`/${project.id}`)
-    } else {
-      setIsCreateProjectOpen(true)
-    }
+    router.push(`/onboarding`)
+    // if (project?.id) {
+    //   router.push(`/${project.id}`)
+    // } else {
+    //   router.push(`/onboarding`)
+    // }
   }
 
   return (
@@ -82,23 +76,7 @@ export default function Home() {
             <a href="#" className="text-sm font-semibold text-gray-900">Learn more →</a>
           </div>
         </div>
-        <Gooey />
       </div>
-      <PreviewGradient />
-      <Dialog open={isCreateProjectOpen} onClose={setIsCreateProjectOpen}>
-        <DialogPanel className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 p-6">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-semibold">Create a new project</h2>
-            <p className="text-gray-600 mt-2">You don’t have any projects yet. Create one to get started.</p>
-            <button
-              onClick={() => setIsCreateProjectOpen(false)}
-              className="mt-4 px-4 py-2 bg-emerald-900 text-white rounded-md hover:bg-indigo-500"
-            >
-              Close
-            </button>
-          </div>
-        </DialogPanel>
-      </Dialog>
     </div>
   )
 }

@@ -85,6 +85,26 @@ export const projectRouter = createTRPCRouter({
             }
         })
     }),
+    getTrashProjects: protectedProcedure.query(async ({ ctx }) => {
+        return await ctx.db.project.findMany({
+            where: {
+                deletedAt: { not: null }
+            },
+            orderBy: { deletedAt: 'desc' }
+        })
+    }),
+    untrashProjects: protectedProcedure
+        .input(z.object({ projectId: z.string() }))
+        .mutation(async ({ ctx, input }) => {
+            return await ctx.db.project.update({
+                where: {
+                    id: input.projectId
+                },
+                data: {
+                    deletedAt: null
+                }
+            })
+        }),
     getCommits: protectedProcedure.input(z.object({
         projectId: z.string()
     })).query(async ({ ctx, input }) => {
@@ -130,6 +150,7 @@ export const projectRouter = createTRPCRouter({
             data: {
                 deletedAt: new Date()
             }
+
         })
     }),
     getTeamMembers: protectedProcedure.input(z.object({ projectId: z.string() })).query(async ({ ctx, input }) => {

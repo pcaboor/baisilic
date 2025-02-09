@@ -1,6 +1,6 @@
 'use client'
 
-import { UserPlus } from 'lucide-react'
+import { Plus, UserPlus, UserPlus2 } from 'lucide-react'
 import React from 'react'
 import { toast } from 'sonner'
 import { Button } from '~/components/ui/button'
@@ -29,9 +29,15 @@ const InviteButton = () => {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
-            <Button onClick={() => { setOpen(true) }} className='bg-gray-200 shadow-none text-black '>
-                <UserPlus />
+            <Button onClick={() => { setOpen(true) }} className='bg-white hover:bg-neutral-100 shadow-none text-neutral-500 text-base'>
+                <Plus
+                    size={17}
+                    className="rounded transition-all duration-200 ease-in-out hover:bg-neutral-100 hover:scale-110"
+                />
+                Inviter des collaborateurs
             </Button>
+
+
         </>
     )
 }

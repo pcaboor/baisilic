@@ -7,7 +7,7 @@ import { api } from '~/trpc/react'
 import MDEditor from '@uiw/react-md-editor'
 
 import { Avatar, AvatarImage } from '~/components/ui/avatar'
-import CodeReference from '../[projectId]/code-reference'
+import CodeReference from '../dashboard/code-reference'
 
 const QAPage = () => {
     const { projectId } = useProject()
