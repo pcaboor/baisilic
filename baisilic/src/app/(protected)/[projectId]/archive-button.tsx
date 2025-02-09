@@ -1,5 +1,6 @@
 'use client'
 
+import { Save } from 'lucide-react'
 import React from 'react'
 import { toast } from 'sonner'
 import { Button } from '~/components/ui/button'
@@ -13,7 +14,7 @@ const ArchiveButton = () => {
     const { projectId } = useProject()
     const refetch = useRefetch
     return (
-        <Button disabled={archiveProject.isPending} onClick={() => {
+        <Button className='bg-gray-200 shadow-none text-black ' disabled={archiveProject.isPending} onClick={() => {
             const confirm = window.confirm('Are you sure you want to archive this project ?')
             if (confirm) {
                 archiveProject.mutate({ projectId: projectId }, {
@@ -26,7 +27,7 @@ const ArchiveButton = () => {
                 })
             }
         }}>
-            Archiver le projet
+            <Save />
         </Button>
     )
 }

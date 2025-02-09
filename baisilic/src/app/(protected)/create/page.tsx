@@ -10,7 +10,7 @@ import { ExternalLinkIcon, Info, Loader2, Check, Github, Coins, Triangle, Triang
 import LogTerminal from './log-project'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ActionSearchBar } from '~/components/ui/searchbar/action-search-bar'
+
 
 type FormInput = {
     repoUrl: string,
@@ -107,7 +107,7 @@ const CreatePage = () => {
                 >
                     Nouveau projet
                 </motion.h1>
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className=" text-muted-foreground mt-2">
                     Entrez l'URL de votre dépôt pour le lier à ToucaML
                 </p>
             </div>
@@ -127,6 +127,7 @@ const CreatePage = () => {
                             required
                         />
                     </motion.div>
+
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}

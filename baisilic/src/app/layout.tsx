@@ -5,7 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
-import { Inter, Poppins } from "next/font/google";
+import { Archivo, Poppins } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "sonner";
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const inter = Inter({
+const dmSans = Archivo({
   subsets: ["latin"],
-  weight: ["400", "700"], // Poids de la police
-  variable: "--font-poppins", // Variable CSS pour la police
+  weight: ["400", "700"],
+  variable: "--font-dm-sans",
 });
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable}`}>
+      <html lang="en" className={`${dmSans.variable}`}>
         <body className="font-sans">
           <TRPCReactProvider>{children}</TRPCReactProvider>
           <Toaster richColors />

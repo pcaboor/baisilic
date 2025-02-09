@@ -8,6 +8,7 @@ export default {
 		extend: {
 			fontFamily: {
 				sans: [
+					// 'var(--font-dm-sans)',
 					'system-ui', // Ajoutez System UI
 					'-apple-system', // Ajoutez Apple System (sur macOS et iOS)
 					'BlinkMacSystemFont', // Ajoutez BlinkMacSystemFont (sur Chrome, Safari)

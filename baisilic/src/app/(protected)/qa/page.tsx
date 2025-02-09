@@ -3,10 +3,11 @@ import React from 'react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '~/components/ui/sheet'
 import useProject from '~/hooks/use-project'
 import { api } from '~/trpc/react'
-import AskQuestionCard from '../dashboard/ask-question-card'
+
 import MDEditor from '@uiw/react-md-editor'
-import CodeReference from '../dashboard/code-reference'
+
 import { Avatar, AvatarImage } from '~/components/ui/avatar'
+import CodeReference from '../[projectId]/code-reference'
 
 const QAPage = () => {
     const { projectId } = useProject()
