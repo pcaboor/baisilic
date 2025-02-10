@@ -83,7 +83,7 @@ const CreatePage = () => {
                 setCreditsInfo({})
 
                 // Redirection vers la page du projet
-                router.push(`/${project.id}`)
+                router.push(`/dashboard`)
             },
             onError: (error) => {
                 toast.error('Échec de la création du projet')

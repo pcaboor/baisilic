@@ -105,6 +105,34 @@ export const projectRouter = createTRPCRouter({
                 }
             })
         }),
+    deleteProjects: protectedProcedure
+        .input(z.object({ projectId: z.string() }))
+        .mutation(async ({ ctx, input }) => {
+
+            await ctx.db.userToProject.deleteMany({
+                where: {
+                    projectId: input.projectId,
+                    userId: ctx.user.userId!,
+                },
+            });
+            const remainingUsers = await ctx.db.userToProject.findMany({
+                where: { projectId: input.projectId },
+            });
+            if (remainingUsers.length === 0) {
+
+                await ctx.db.sourceCodeEmbedding.deleteMany({
+                    where: { projectId: input.projectId },
+                });
+
+                await ctx.db.commit.deleteMany({
+                    where: { projectId: input.projectId },
+                });
+
+                await ctx.db.project.delete({
+                    where: { id: input.projectId },
+                });
+            }
+        }),
     getCommits: protectedProcedure.input(z.object({
         projectId: z.string()
     })).query(async ({ ctx, input }) => {

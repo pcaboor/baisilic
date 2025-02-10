@@ -1,6 +1,6 @@
 'use client'
 
-import { Book, CircleHelp, CircleUserRound, Clock, Cloud, CreditCard, GitGraph, Github, GithubIcon, Home, House, Keyboard, LifeBuoy, LogOut, Mail, MessageCircle, MessageSquare, Plus, PlusCircle, Settings, Settings2, Sparkles, SquareDashedMousePointer, Trash2, UserPlus, Users } from "lucide-react"
+import { Bird, Book, ChevronDownIcon, CircleHelp, CircleUserRound, Clock, Cloud, CreditCard, GitGraph, Github, GithubIcon, Home, House, Keyboard, LifeBuoy, LogOut, Mail, MessageCircle, MessageSquare, Plus, PlusCircle, ScanFace, Settings, Settings2, Sparkles, SquareDashedMousePointer, Trash2, UserPlus, Users } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "~/components/ui/sidebar"
@@ -32,7 +32,7 @@ export function AppSidebar() {
     const { user } = useUserDb();
 
     const projectTools = [
-        { title: "IA de ToucaML", url: `/dashboard`, icon: Sparkles },
+        { title: "IA de Singularity", url: `/dashboard`, icon: ScanFace },
         { title: "Tous les commits", url: `/commits`, icon: GitGraph },
         { title: "Conversations", url: '/qa', icon: MessageCircle },
         { title: "Aide", url: '/learn', icon: CircleHelp },
@@ -44,35 +44,32 @@ export function AppSidebar() {
     return (
         <TooltipProvider>
             <Sidebar collapsible="icon" variant="floating" className="p-0 shadow-none rounded-none ">
-                <SidebarHeader className="bg-muted" />
                 <SidebarContent className="shadow-none bg-muted">
                     <SidebarGroup>
                         <SidebarGroupContent>
                             <SidebarMenu>
                                 {home.map(home => (
-                                    <SidebarMenuItem key={home.title}>
-                                        <DropdownMenu>
+                                    <SidebarMenuItem key={home.title} className="flex items-center justify-between">
+                                        <DropdownMenu >
                                             <DropdownMenuTrigger asChild>
-                                                <SidebarMenuButton className="w-full">
-                                                    <div className={cn(
-                                                        { '!bg-gray-red !text-black font-medium': pathname === home.url },
-                                                        'list-none [&>svg]:size-5 flex items-center gap-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer'
-                                                    )}>
-                                                        <home.icon className="text-neutral-500" />
-                                                        <span className="text-base font-medium text-neutral-500">
-                                                            {home.title} {user?.firstName}
-                                                        </span>
-                                                    </div>
-                                                </SidebarMenuButton>
+                                                <div className={cn(
+                                                    { '!bg-gray-red !text-black font-medium': pathname === home.url },
+                                                    'list-none [&>svg]:size-5 flex items-center gap-2 p-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer'
+                                                )}>
+                                                    <home.icon className="text-neutral-500" />
+                                                    <span className="text-base font-medium text-neutral-500">
+                                                        {home.title} {user?.firstName}
+                                                    </span>
+                                                    <ChevronDownIcon />
+                                                </div>
                                             </DropdownMenuTrigger>
-
                                             {/* 🔽 Menu déroulant */}
-                                            <DropdownMenuContent className="ml-5 w-72 text-2xl">
+                                            < DropdownMenuContent className="ml-5 w-72 text-2xl" >
                                                 {projects?.map(project => (
                                                     <div
                                                         key={project.id}
                                                         onClick={() => setProjectId(project.id)}
-                                                        className="flex items-center gap-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-200 cursor-pointer"
+                                                        className="flex items-center gap-2 rounded-md transition-all duration-200 ease-in-out hover:bg-neutral-300 cursor-pointer"
                                                     >
                                                         <DropdownMenuItem>
                                                             <div className={cn(
@@ -163,8 +160,11 @@ export function AppSidebar() {
                                                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
+
+
                                         </DropdownMenu>
                                     </SidebarMenuItem>
+
                                 ))}
                             </SidebarMenu>
                         </SidebarGroupContent>

@@ -33,17 +33,19 @@ const SidebarLayout = ({ children }: Props) => {
                             <div className="rounded-sm size-6 flex items-center justify-center text-white text-sm bg-neutral-400 text-primary transition-all duration-200 ease-in-out">
                                 {project.name[0]}
                             </div>
+                            <span className='text-neutral-300 text-sm'>Projet selectionné</span>
+
                             <span className="text-sm font-medium text-neutral-600 transition-all duration-200 ease-in-out hover:text-neutral-800">
                                 {project.name}
                             </span>
-                            <span className=" text-sm font-light text-neutral-400 transition-all duration-200 ease-in-out hover:text-neutral-800">
+                            {/* <span className=" text-sm font-light text-neutral-400 transition-all duration-200 ease-in-out hover:text-neutral-800">
                                 Créé le:{' '}
                                 {new Date(project.createdAt).toLocaleDateString('fr-FR', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
                                 })}
-                            </span>
+                            </span> */}
                         </div>
 
                         {/* Boutons à droite */}

@@ -17,6 +17,13 @@ const Trash = () => {
 
         }
     })
+    const deleteForeverMutation = api.project.deleteProjects.useMutation({
+        onSuccess: () => {
+            refetch() // Rafraîchir les projets après restauration
+            router.refresh();
+
+        }
+    })
 
     const deletedProjects = projects?.filter(project => project.deletedAt !== null)
     console.log(deletedProjects)
@@ -45,6 +52,13 @@ const Trash = () => {
 
                             >
                                 Restaurer
+                            </button>
+                            <button
+                                className='bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-md mt-2'
+                                onClick={() => deleteForeverMutation.mutate({ projectId: project.id })}
+
+                            >
+                                Supprimer définitivemet
                             </button>
                         </div>
                     ))
