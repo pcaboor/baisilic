@@ -9,6 +9,8 @@ import { Archivo, Poppins } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { Toaster } from "sonner";
+import NavBar from "~/components/ui/landing-page/navBar";
+
 
 
 export const metadata: Metadata = {
@@ -23,14 +25,19 @@ const dmSans = Archivo({
   variable: "--font-dm-sans",
 });
 
+
+
 export default function RootLayout({
+
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={"/"} signInUrl="/signin">
       <html lang="en" className={`${dmSans.variable}`}>
         <body className="font-sans">
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            {children}
+          </TRPCReactProvider>
           <Toaster richColors />
         </body>
       </html>

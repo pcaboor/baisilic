@@ -11,7 +11,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
 
 const home = [
-    { title: "Touca de", url: '/welcome', icon: CircleUserRound },
+    { title: "Singulary", url: '/welcome', icon: CircleUserRound },
 ]
 
 const items = [
@@ -32,15 +32,13 @@ export function AppSidebar() {
     const { user } = useUserDb();
 
     const projectTools = [
-        { title: "IA de Singularity", url: `/dashboard`, icon: ScanFace },
+        { title: "IA de Singulary", url: `/dashboard`, icon: ScanFace },
         { title: "Tous les commits", url: `/commits`, icon: GitGraph },
         { title: "Conversations", url: '/qa', icon: MessageCircle },
         { title: "Aide", url: '/learn', icon: CircleHelp },
         { title: "Corbeille", url: '/trash', icon: Trash2 },
         { title: "Paramètres", url: '/settings', icon: Settings2 }
     ]
-
-
     return (
         <TooltipProvider>
             <Sidebar collapsible="icon" variant="floating" className="p-0 shadow-none rounded-none ">

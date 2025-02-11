@@ -2,7 +2,7 @@
 
 import { ChartNoAxesGantt, GraduationCap } from "lucide-react";
 import useUserDb from "~/hooks/use-user"
-import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import useProject from "~/hooks/use-project";
 import Link from "next/link";
 import { useState } from "react";
@@ -11,9 +11,6 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Spinner } from "~/components/ui/spinner";
 import { api } from "~/trpc/react";
 import { motion } from "framer-motion";
-import { Button } from "~/components/ui/button";
-import ArchiveButton from "../dashboard/archive-button";
-import { Avatar, AvatarImage } from "~/components/ui/avatar";
 
 const ProjectSkeleton = () => (
     <motion.div
@@ -98,7 +95,6 @@ export function Welcome() {
             )}
             <div className="rounded-lg text-card-foreground">
                 <div className="p-4">
-
                     <div className="mb-5">
                         {isLoading ? (
                             <motion.div
@@ -113,13 +109,11 @@ export function Welcome() {
                                 Bonjour {user?.firstName || 'User'} ravi de vous revoir
                             </h1>
                         )}
-
                         <p className="text-sm text-neutral-400 font-semibold flex gap-1 items-center">
                             <ChartNoAxesGantt size={20} />
                             Vos projets
                         </p>
                         <div className="h-4"></div>
-
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                 {isLoading ? (
@@ -168,15 +162,12 @@ export function Welcome() {
                                 )}
                             </div>
                         </div>
-
                         <div className="h-6"></div>
-
                         <p className="text-sm text-neutral-400 font-semibold flex gap-1 items-center">
                             <GraduationCap size={20} />
-                            Apprendre à utiliser Singularity
+                            Apprendre à utiliser Singulary
                         </p>
                         <div className="h-4"></div>
-
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                                 {isLoading ? (

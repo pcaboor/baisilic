@@ -22,7 +22,7 @@ import Link from 'next/link';
 
 const AskQuestionCard: React.FC = () => {
     const placeholders = [
-        "Posez votre question à Singularity...",
+        "Posez votre question à Singulary...",
         "Que voulez-vous savoir?",
         "Comment puis-je vous aider aujourd'hui?",
     ];
@@ -112,10 +112,9 @@ const AskQuestionCard: React.FC = () => {
                                 </p>
                                 <p className="text-sm text-blue-400 font-semibold flex gap-1 items-center">
                                     <Popover>
-                                        <PopoverTrigger className='flex items-center gap-1'><Lightbulb /> Fonctionnement de Singularity</PopoverTrigger>
-                                        <PopoverContent className='text-sm text-neutral-400'>Singularity est entrainé et spécialisé pour votre projet <span className='text-blue-500 font-medium'><Link href={"/learn"}>apprenez à utiliser Singularity ici</Link></span></PopoverContent>
+                                        <PopoverTrigger className='flex items-center gap-1'><Lightbulb /> Fonctionnement de Singulary</PopoverTrigger>
+                                        <PopoverContent className='text-sm text-neutral-400'>Singulary est entrainé et spécialisé pour votre projet <span className='text-blue-500 font-medium'><Link href={"/learn"}>apprenez à utiliser Singulary ici</Link></span></PopoverContent>
                                     </Popover>
-
                                 </p>
                             </div>
                             <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -167,7 +166,7 @@ const AskQuestionCard: React.FC = () => {
 
                             {isLoading ? (
                                 <div className='flex gap-2 items-center text-neutral-400 font-medium'>
-                                    Singularity réfléchi <Spinner size='sm' />
+                                    Singulary réfléchi <Spinner size='sm' />
                                 </div>
                             ) : (
                                 <div className="flex items-start gap-4">
