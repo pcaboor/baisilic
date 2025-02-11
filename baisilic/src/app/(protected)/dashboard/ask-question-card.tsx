@@ -89,7 +89,7 @@ const AskQuestionCard: React.FC = () => {
     };
 
     return (
-        <div className="">
+        <div>
             <div className={`flex-grow overflow-auto px-4 pt-8 pb-32 ${chatState === 'initial' ? 'flex items-center justify-center' : ''}`}>
                 <AnimatePresence>
                     {chatState === 'initial' && (

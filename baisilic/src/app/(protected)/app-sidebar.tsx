@@ -1,6 +1,6 @@
 'use client'
 
-import { Bird, Book, ChevronDownIcon, CircleHelp, CircleUserRound, Clock, Cloud, CreditCard, GitGraph, Github, GithubIcon, Home, House, Keyboard, LifeBuoy, LogOut, Mail, MessageCircle, MessageSquare, Plus, PlusCircle, ScanFace, Settings, Settings2, Sparkles, SquareDashedMousePointer, Trash2, UserPlus, Users } from "lucide-react"
+import { Bird, Book, ChevronDownIcon, CircleHelp, CircleUserRound, Clock, Cloud, CreditCard, DollarSign, GitGraph, Github, GithubIcon, Home, House, Keyboard, LifeBuoy, LogOut, Mail, MessageCircle, MessageSquare, Plus, PlusCircle, ScanFace, Settings, Settings2, Sparkles, SquareDashedMousePointer, Trash2, UserPlus, Users } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "~/components/ui/sidebar"
@@ -16,7 +16,7 @@ const home = [
 
 const items = [
     { title: "Accueil", url: '/welcome', icon: House },
-    { title: "Billing", url: '/billing', icon: CreditCard }
+    { title: "Obtenir des tokens", url: '/billing', icon: DollarSign }
 ]
 
 const footer = [

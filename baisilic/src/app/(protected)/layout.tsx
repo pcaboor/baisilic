@@ -15,7 +15,7 @@ type Props = {
 
 const SidebarLayout = ({ children }: Props) => {
 
-    const excludedPaths = ['/onboarding']; // Ajoute ici les pages à ignorer
+    const excludedPaths = ['']; // Ajoute ici les pages à ignorer
     const pathname = usePathname();
     const { project } = useProject()
     if (excludedPaths.includes(pathname)) {
