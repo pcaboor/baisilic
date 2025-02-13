@@ -61,11 +61,11 @@ export const checkCredits = async (githubUrl: string, githubToken?: string) => {
 
 (async () => {
     const { data } = await octokit.rest.rateLimit.get();
-    console.log('Limite =>', data);
+    // console.log('Limite =>', data);
 })();
 
 const { data } = await octokit.rest.users.getAuthenticated();
-console.log('Utilisateur authentifié:', data.login);
+// console.log('Utilisateur authentifié:', data.login);
 
 
 export const loadGithubRepo = async (githubUrl: string, githubToken?: string) => {
@@ -104,7 +104,7 @@ export const indexGithubRepo = async (projectId: string, githubUrl: string, gith
     const docs = await loadGithubRepo(githubUrl, githubToken)
     const allEmbeddings = await generateEmbeddings(docs)
     await Promise.allSettled(allEmbeddings.map(async (embedding, index) => {
-        console.log(`processing ${index} of ${allEmbeddings.length}`)
+        // console.log(`processing ${index} of ${allEmbeddings.length}`)
         if (!embedding) return
 
         const sourceCodeEmbedding = await db.sourceCodeEmbedding.create({
